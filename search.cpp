@@ -21,8 +21,9 @@ using namespace std;
         {   
             while (i<size-1) {
                     getline(myfile, element);
-                    int l=element.length()-1;
-
+                    
+                    int l=element.length();
+                    cout<<l<<endl;
                     string e=element.substr(0, l);
                     *(arr+(i)) =e;
 

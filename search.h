@@ -1,6 +1,7 @@
 #ifndef SEARCH_H
 #define SEARCH_H
 #include <typeinfo>
+#include "Python.h"
 
 #include <bits/stdc++.h>
 #include <functional>
@@ -12,6 +13,8 @@ using namespace std;
     int bf_search(T* arr, int size,T element);
     template <typename T>
     int bst_search(T* arr, int low,int high,T element) ;
+    // template <typename T>
+    // int cs_search(T* arr, int low,int high,T element);
     string* read_dataset(string filename); //read premake dataset
 
 

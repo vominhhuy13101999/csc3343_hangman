@@ -29,3 +29,13 @@ int bf_search(T* arr, int size,T element){
         
         return -1;
     }
+// template <typename T>
+// int cs_search(T* arr, int low,int high,T element){
+//     if (arr[low]==element)
+//         return low;
+//     else if (low==high)
+//         return -1;
+//     else
+//         return cs_search(arr,low+1,high,element);
+    
+// }
