@@ -1,3 +1,3 @@
 all: SearchTest
 SearchTest:
-	g++ -std=c++14 *.cpp   -o SearchTest.exe
+	g++ -std=c++14 main.cpp search.cpp  -o SearchTest.exe

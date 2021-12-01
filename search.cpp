@@ -23,7 +23,7 @@ using namespace std;
                     getline(myfile, element);
                     
                     int l=element.length();
-                    cout<<l<<endl;
+                    // cout<<l<<endl;
                     string e=element.substr(0, l);
                     *(arr+(i)) =e;
 
@@ -33,7 +33,7 @@ using namespace std;
             string e=element.substr(0, l);
 
             *(arr+(i)) =e;  
-            cout<<*(arr+(i)) <<endl;
+            // cout<<*(arr+(i)) <<endl;
           
             myfile.close();
                 }

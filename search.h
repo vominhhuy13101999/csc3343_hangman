@@ -1,12 +1,10 @@
 #ifndef SEARCH_H
 #define SEARCH_H
 #include <typeinfo>
-#include "Python.h"
 
 #include <bits/stdc++.h>
 #include <functional>
 #include "bf_search.tpp"    
-
 using namespace std;
 
     template <typename T>
