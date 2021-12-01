@@ -16,4 +16,38 @@ using namespace std;
     string* read_dataset(string filename); //read premake dataset
 
 
-#endif
+class TreeNode
+    {
+
+        public:
+            string data;
+            TreeNode* leftchild;
+            TreeNode* rightchild;
+            // std::vector<TreeNode<E>>* children;
+            // Comparator* C;
+            TreeNode():data(""),leftchild(NULL),rightchild(NULL){
+            };
+            TreeNode(  string d){
+                data=d;
+                leftchild = rightchild = NULL;
+            } ;
+            void addChildren(string d);
+    };
+class Tree
+    {
+
+        public:
+            TreeNode* Head;
+            int size;
+
+            // std::vector<TreeNode<E>>* children;
+            // Comparator* C;
+            Tree():Head(NULL){
+                
+            };
+            Tree(string d){
+                Head=New TreeNode(d)
+            };
+            void addChildren(string data);
+            TreeNode* search(TreeNode* N,string data);
+    };
