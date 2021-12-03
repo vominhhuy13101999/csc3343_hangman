@@ -46,34 +46,44 @@ using namespace std;
     }
 
 
-void TreeNode::addChildren(string d){
-    if (data==""){
-        data=d;
-        leftchild,rightchild=new TreeNode("");
-        return;
-    }
-    else if(data>d)
-        leftchild->addChildren(d);   
-    else
-        rightchild->addChildren(d);   
 
-}
-void Tree::addChildren(string data){
+
+TreeNode* Tree::addChildren(TreeNode* N,string data){
     
-    if (!Head){
-        Head=new TreeNode(data);
+    if (!N){
+        N=new TreeNode(data);
+        return N;
+
+
     }
-    
-    Head->addChildren(data);
+    if (data < N->data)
+        N->left = this->addChildren(N->left, data);
+    else
+        N->right = this->addChildren(N->right, data);
+ 
+    return N;
 }
-TreeNode* Tree::search(TreeNode* N,string data){
-    if (N->data==""|N->data==data){
+TreeNode* Tree::search(TreeNode* N,string d){
+    if (!N || N->data==d){
+        // cout<<N->data<<endl;
         return N;
     }
-    else if(N->data>data){
-        return search(N->leftchild,data);
-    }
-    else
-        return search(N->rightchild,data);
+    else if(N->data>d){
+        // cout<<N->data<<endl;
 
+        return search(N->left,d);
+    }
+    else{
+        // cout<<N->data<<endl;
+
+        return search(N->right,d);}
+
+}
+void Tree::inorder(TreeNode* root)
+{
+    if (root != NULL) {
+        inorder(root->left);
+        cout<<root->data<<endl;
+        inorder(root->right);
+    }
 }

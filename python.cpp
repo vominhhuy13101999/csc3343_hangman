@@ -64,6 +64,18 @@ static PyObject * search_cs(PyObject *self, PyObject *args)
     }
     return PyLong_FromLong(index); // how function return value in python
 };
+
+static PyObject * get_value(PyObject *self, PyObject *args)
+{
+    int a;
+    char *v_;
+    if (!PyArg_ParseTuple(args, "i", &a)) //how the function received value from python
+        return NULL;
+    v_ = &(*(arr+a))[0]; //perform code here example perform 
+
+    return Py_BuildValue("s",v_); // how function return value in python
+};
+
 //lists all method
 static PyMethodDef SearchMethods[] = {
     {"bf",  search_bf, METH_VARARGS,
@@ -72,6 +84,8 @@ static PyMethodDef SearchMethods[] = {
     "Execute a binary search tree."},   
     {"cs", search_cs, METH_VARARGS, 
     "Execute a decrease by constant."}, 
+    {"get_value", get_value, METH_VARARGS, 
+    "return value byy index"},
     {NULL, NULL, 0, NULL},     /* Sentinel */
 };
 
