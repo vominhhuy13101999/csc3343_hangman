@@ -33,7 +33,19 @@ PyObject* vectorToList_Float(const vector<double> &data) {
 	}
 	return listObj;
 }
-
+PyObject* vectorToList_Int(const vector<int> &data) {
+  PyObject* listObj = PyList_New( data.size() );
+	if (!listObj) throw logic_error("Unable to allocate memory for Python list");
+	for (unsigned int i = 0; i < data.size(); i++) {
+		PyObject *num = PyLong_FromLong( (int) data[i]);
+		if (!num) {
+			Py_DECREF(listObj);
+			throw logic_error("Unable to allocate memory for Python list");
+		}
+		PyList_SET_ITEM(listObj, i, num);
+	}
+	return listObj;
+}
 // ======
 // TUPLES
 // ======
@@ -239,10 +251,9 @@ static PyObject * avltree(PyObject *self, PyObject *args)
     //     PyErr_SetString(SearchError, "Search failed");
     //     return PyLong_FromLong(index);
     // }
-    vector<double> v1;
-    v1.push_back(T->get_min(T->head)->data.second);
+    vector<int> v1=T->extract_5_min(T->get_5_min(T->head));
 
-    return  vectorToList_Float(v1); // how function return value in python
+    return  vectorToList_Int(v1); // how function return value in python
 };
 
 

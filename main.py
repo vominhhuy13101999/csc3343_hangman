@@ -47,7 +47,8 @@ def relative_word(word,cut_off=5):
   a=find_relative(word)
   return txt[a][:cut_off,:].reshape(-1,)
 def arrange(word,short):
-  short=short.tolist()
+  if not isinstance(short, list):
+    short=short.tolist()
   short.sort(key=lambda x:abs(len(x)-len(word)))
   for i in range(len(short)):
     if short[i] ==word:
@@ -63,27 +64,29 @@ if __name__ == "__main__":
     a=relative_word(w)
     print(arrange(w,a))
     bigl=angle_matrix(w).T.tolist()[0]
-    print(search.bf("tesla"))
-    print(search.bst("ada"))
+    print(search.bf("day"))
+    print(search.bst("day"))
     print(search.get_value(search.cs("buy")))
 
 
-    a=search.bst("ada")
-    if search.get_value(a)=="ada":
-        l=["ada"]
+    a=search.bst("day")
+    if search.get_value(a)=="day":
+        l=["day"]
         
         l.append(search.get_value(a-2))
         l.append(search.get_value(a-1))
         l.append(search.get_value(a+1))
         l.append(search.get_value(a+2))
-
+    else:
+        l=[search.get_value(a-2+i) for i in range(5)]
     print(l)
 
     
 
     l=search.avl(bigl)
     print(l)
-    print(txt[int(l[0])])
+
+    print(arrange(w,[txt[i][0] for i in l]))
 
 
 

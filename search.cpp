@@ -204,3 +204,49 @@ Node* avlTree::get_min(Node* root){
         return this->get_min(root->left);
 }
 
+Node* avlTree::get_5_min(Node* root){
+    if (root->height<=2)
+        return root;
+    else
+        return this->get_5_min(root->left);
+}
+vector<int> avlTree::extract_5_min(Node* root){
+    vector<int> a;
+
+    if (!root->left->left){
+        //left node
+        a.push_back(root->left->data.second);}
+    else{
+        a.push_back(root->left->left->data.second);
+        a.push_back(root->left->data.second);
+
+    }    
+        
+    if (!root->left->right)
+        a.push_back(root->data.second);
+    else{
+        a.push_back(root->left->right->data.second);
+
+        a.push_back(root->data.second);
+
+    }
+           
+
+    if(!root->right->left){
+        a.push_back(root->right->data.second);}
+    else{
+        a.push_back(root->right->left->data.second);
+
+        a.push_back(root->right->data.second);
+
+
+    }
+        if (!root->right->right)
+            ;
+        else
+            a.push_back(root->right->right->data.second);
+        
+
+   return a;
+}
+

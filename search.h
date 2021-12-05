@@ -82,5 +82,9 @@ class avlTree{
         void inorder(Node* root);
         void preorder (Node* root);
         Node* get_min(Node* root);
+        Node* get_5_min(Node* root);
+        vector<int> extract_5_min(Node* root);
+
+
 };
 #endif
