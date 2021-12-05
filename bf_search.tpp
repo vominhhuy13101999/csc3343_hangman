@@ -14,7 +14,7 @@ int bst_search(T* arr, int low,int high,T element){
             return bst_search(arr,mid+1,high,element);
     }
     else
-        return -1;
+        return high;
     
 }
 template <typename T>

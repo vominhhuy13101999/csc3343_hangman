@@ -4,6 +4,8 @@
 #include "search.h"
 #include <vector>
 #include <functional>
+#include <algorithm>
+
 using namespace std;
     
 
@@ -87,3 +89,118 @@ void Tree::inorder(TreeNode* root)
         inorder(root->right);
     }
 }
+
+
+
+int avlTree::get_height(Node* root){
+    if (!root){
+        return -1;}
+    return root->height;
+}
+Node* avlTree::insert(Node* root,pair<double,int>key){
+    // step 1 insert
+    if (!root){
+        root=new Node(key);}
+    else if (key.first < root->data.first)
+        root->left=this->insert(root->left,key);
+    else    
+        root->right=this->insert(root->right,key);
+
+    root->height=1+ max(this->get_height(root->left),this->get_height(root->right));
+    int balance=this->get_balance(root);
+    
+
+    // step 2 balance
+    if (balance>=2){
+        int b =this->get_balance(root->left);
+        if (b>=1) //left left
+            root=this->right_rotate(root);
+        else{
+            //left right
+            root->left=this->left_rotate(root->left);
+            root=this->right_rotate(root);
+        }
+        
+    }
+    if (balance<=-2){
+        int b =this->get_balance(root->right);
+        if (b<=-1) //right right
+            root=this->left_rotate(root);
+        else{
+            // right left
+            root->right=this->right_rotate(root->right);
+            root=this->left_rotate(root);
+        }
+    }
+
+    return root;
+}
+
+
+
+int avlTree::get_balance(Node* root){
+    if (!root)
+        return 0;  
+    return this->get_height(root->left)-this->get_height(root->right);
+}
+
+
+Node* avlTree::left_rotate(Node* z){
+    Node* y=z->right;
+    Node* t2=y->left;
+    z->right=t2;
+    y->left=z;
+    z->height=max(this->get_height(z->left),this->get_height(z->right))+1;
+    y->height=max(this->get_height(y->left),this->get_height(y->right))+1;
+    return y;
+
+}
+
+Node* avlTree::right_rotate(Node* z){
+    Node* y=z->left;
+    Node* t2=y->right;
+    z->left=t2;
+    y->right=z;
+    z->height=max(this->get_height(z->left),this->get_height(z->right))+1;
+    y->height=max(this->get_height(y->left),this->get_height(y->right))+1;
+    return y;
+}
+Node* avlTree::search(Node* root, int key){
+    if(!root){
+        if (root->data.first==key)
+            return root;
+        else if (root->data.first<key)
+            return this->search(root->right,key);
+        else
+            return this->search(root->left,key);
+    
+    }
+    return root;
+}
+
+
+void avlTree::inorder(Node* root){
+    if (root){
+        inorder(root->left);
+        cout<<root->data.first<<endl;
+        inorder(root->right);
+    }
+}
+
+void avlTree::preorder (Node* root){
+    if (root){
+        cout<<root->data.first<<endl;
+        preorder(root->left);
+        preorder(root->right);
+
+    }
+}
+
+
+Node* avlTree::get_min(Node* root){
+    if (!root->left)
+        return root;
+    else
+        return this->get_min(root->left);
+}
+
