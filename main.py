@@ -60,18 +60,18 @@ def arrange(word,short):
 
 if __name__ == "__main__":
 
-    w="day"
+    w="mornig"
     a=relative_word(w)
     print(arrange(w,a))
     bigl=angle_matrix(w).T.tolist()[0]
-    print(search.bf("day"))
-    print(search.bst("day"))
-    print(search.get_value(search.cs("buy")))
+    print(search.bf(w))
+    print(search.bst(w))
+    print(search.get_value(search.cs(w)))
 
 
-    a=search.bst("day")
-    if search.get_value(a)=="day":
-        l=["day"]
+    a=search.bst(w)
+    if search.get_value(a)==w:
+        l=[w]
         
         l.append(search.get_value(a-2))
         l.append(search.get_value(a-1))
