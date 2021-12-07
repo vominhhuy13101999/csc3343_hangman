@@ -1,4 +1,4 @@
-import search
+# import search
 import pandas as pd
 import numpy as np
 import numpy.linalg as la
@@ -13,7 +13,7 @@ import numpy.linalg as la
 
 alphabet= {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4, 'f': 5, 'g': 6, 'h': 7, 'i': 8, 'j': 9, 'k': 10, 'l': 11, 'm': 12, 'n': 13, 'o': 14, 'p': 15, 'q': 16, 'r': 17, 's': 18, 't': 19, 'u': 20, 'v': 21, 'w': 22, 'x': 23, 'y': 24, 'z': 25}
 
-txt=pd.read_csv("/root/cpsc3343_hangman/text.txt",header=None).astype(str)
+txt=pd.read_csv("text.txt",header=None).astype(str)
 txt=txt.to_numpy()
 
 def string_to_matrix(word):
@@ -57,7 +57,7 @@ def arrange(word,short):
       return short
   return short
 
-
+"""
 if __name__ == "__main__":
 
     w="mornig"
@@ -88,7 +88,7 @@ if __name__ == "__main__":
 
     print(arrange(w,[txt[i][0] for i in l]))
 
-
+"""
 
 
 
