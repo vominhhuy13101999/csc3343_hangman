@@ -205,7 +205,9 @@ static PyObject * search_bst(PyObject *self, PyObject *args)
     index = bst_search<string>(arr,0,size-1,a_); //perform code here example perform 
     // cout<<command<<endl;
     if (index < 0) {
-        PyErr_SetString(SearchError, "Search failed");
+        // PyErr_SetString(SearchError, "Search failed");
+        cout<<index<<endl;
+        index=0;
         return PyLong_FromLong(index);
     }
     return PyLong_FromLong(index); // how function return value in python
