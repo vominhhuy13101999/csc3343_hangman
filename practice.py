@@ -3,7 +3,7 @@ from pygame.locals import *
 import pandas as pd
 import random
 import main 
-pygame.init()
+pygame.init()   
 from math import pi
 size = w, h = 1600, 1000
 speed = [2, 2]
@@ -144,8 +144,52 @@ def begin():
     pygame.draw.rect(screen,PINK,pygame.Rect(700, 300, 400, 600))
     instruction_1()
     pygame.display.flip()
-    # pygame.display.update() 
+    pygame.display.update() 
+def end_screen(status):
+    pygame.draw.rect(screen,BLUE,pygame.Rect(700, 300, 600, 300))
     
+    if status:
+        s= "You win! "  
+        face(1)
+    else:
+        s= "You Lose! "
+        face(0)
+    s1="Press enter to continue"
+    s2="Press Esc to got to home screen"
+
+    label = pygame.font.SysFont("Times New Roman", 100).render(s, 1, BLACK)
+    screen.blit(label, (720, 310))
+    label = myfont.render(s1, 1, BLACK)
+    screen.blit(label, (720, 420))
+    label = myfont.render(s2, 1, BLACK)
+    screen.blit(label, (720, 460))
+    pygame.display.flip()
+    pygame.display.update()    
+def end(status):
+    end_screen(status)
+    while not False:
+        
+        # This limits the while loop to a max of 10 times per second.
+        # Leave this out and we will use all CPU we can.
+        clock.tick(3)
+        eraseEvents()
+        
+        for event in pygame.event.get(): # User did something
+
+            print(event)
+            
+            if event.type == pygame.QUIT: # If user clicked close
+                sys.exit() # Flag that we are done so we exit this loop
+            if event.type==pygame.KEYDOWN:
+                print(event.__dict__['unicode'])
+                key=event.__dict__['unicode']
+                if key=="\x1b":
+                    return 0
+                elif key=="\r":
+                    return 1
+            if event.type==pygame.VIDEORESIZE:
+                end_screen(status)
+                pygame.display.flip()
 def instruction_1():
     s_0="H A N G M A N"
     label = pygame.font.SysFont("Times New Roman", 100).render(s_0, 1, GREEN)
@@ -170,14 +214,14 @@ def instruction_1():
     pygame.display.flip()
     pygame.display.update()
 def instruction_2():
-    s="Word  will  be  choosing  random  from  dictionary"
-    s1="choosing  character  by  pressing  key"
+    s="Word  will  be  choosing  random  from  the dictionary"
+    s1="you can choose your own bag of word in Search"
     s2="if you  get  wrong  character  new  body part  will  be reveal"
-    s3="you can choose your on bag of word to play by hit search"
+    s3="hit  esc  to  close  any  window,  hit  space  bar  to  choose  word"
 
     s4="hit  begin  when  you  ready"
     label = myfont.render(s, 1, BLUE)
-    pygame.draw.rect(screen,GREEN,pygame.Rect(460, 500, 1000, 250))
+    pygame.draw.rect(screen,GREEN,pygame.Rect(460, 500, 1100, 250))
 
     # put the label object on the screen at point x=100, y=100
     screen.blit(label, (500, 520))
@@ -196,21 +240,22 @@ def instruction_2():
     pygame.display.flip()
     pygame.display.update()
 def instruction_3(word="",l=[],bag=set()):
-    pygame.draw.rect(screen,GREEN,pygame.Rect(534, 390, 150, 40))
+    begin()
+    pygame.draw.rect(screen,GREEN,pygame.Rect(234, 390, 300, 40))
     
 
     label = myfont.render(word, 1, BLUE)
-    screen.blit(label, (534, 390))
-    pygame.draw.rect(screen,RED,pygame.Rect(534, 430, 150, 300))
+    screen.blit(label, (234, 390))
+    pygame.draw.rect(screen,RED,pygame.Rect(234, 430, 300, 300))
     
-    x,y=534, 430
+    x,y=234, 430
     # put the label object on the screen at point x=100, y=100
     for i in range(len(l)):
         
         label = myfont.render(l[i], 1, BLACK)
         screen.blit(label, (x, y+40*(i+1)))
 
-    pygame.draw.rect(screen,GREEN,pygame.Rect(1266, 390, 150, 340))
+    pygame.draw.rect(screen,GREEN,pygame.Rect(1266, 390, 300, 340))
     x,y=1266, 390
     i=0
     for j in bag:
@@ -219,23 +264,114 @@ def instruction_3(word="",l=[],bag=set()):
         screen.blit(label, (x, y+40*(i)))
     pygame.display.flip()
     pygame.display.update()
-    
+def game(bag):
+    i=0
+    bag=list(bag)
+    if bag:
+        word=random.choice(bag)
+    else:
+        word=random.choice(text)
+    print(word)
+    l=draw(word)
+    d=word_to_dic(word)
+    print(d)
+    already_set=set()
+    part=0
+    done=False
+    while not done:
+        
+        # This limits the while loop to a max of 10 times per second.
+        # Leave this out and we will use all CPU we can.
+        clock.tick(3)
+        eraseEvents()
+        
+        for event in pygame.event.get(): # User did something
+
+            print(event)
+            
+            if event.type == pygame.QUIT: # If user clicked close
+                sys. exit() # Flag that we are done so we exit this loop
+            if event.type==pygame.KEYDOWN:
+                print(event.__dict__['unicode'])
+                key=event.__dict__['unicode']
+                if key=='\x1b':
+                    begin()
+                if key not in alphabet:
+                    continue
+                if key not in already_set and key in d:
+                    fill_all(key,d,l)
+                    already_set.add(key)
+                elif    key not in already_set and not key in d:
+                    part+=1
+                    person((0,0),part)
+                    already_set.add(key)
+
+                else:
+                    pass
+                pygame.display.update() 
+
+            if event.type==pygame.VIDEORESIZE:
+                
+                l=draw(word)
+                for i in already_set:
+                    if i in d:
+                        fill_all(i,d,l)
+                person((0,0),part)
+
+        if part>6:
+            if game_status(already_set,d):
+                face(1)
+                print("win")
+                return end(1)
+                # done=True
+            else:
+                print("lost")
+                # done=True
+                a=end(0)
+                return a
+        else:
+            if game_status(already_set,d):
+                face(1)
+                print("win")
+                a=end(1)
+                return a
+
+                # done=True
+
+
+            
+        # Clear the screen and set the screen background
+        # Draws the surface object to the screen.
+
+        
+        
+        
+        
+        pygame.display.flip()  
 begin()
+bag=set()
 while not done:
     clock.tick(3)
     eraseEvents()
     for event in pygame.event.get(): # User did something
-
+        if event.type == pygame.QUIT: # If user clicked close
+                sys.exit() 
         print(event)
         if event.type==pygame.VIDEORESIZE:
-            
             begin()
+
+
+
         elif event.type==pygame.MOUSEBUTTONDOWN:
             pos=event.__dict__['pos']
             if pos[0]>780 and pos[1]>400 and pos[0]<780+180 and pos[1]<400+50:
                 print("one work")
-                done=True
-                break
+                # done=True
+                i=1
+                while i:
+                    i=game(bag)
+                begin()
+                continue
         
             if pos[0]>780 and pos[1]>550 and pos[0]<780+180 and pos[1]<550+50:
                 instruction_2()
@@ -247,9 +383,11 @@ while not done:
                     clock.tick(3)
                     eraseEvents()
                     for event in pygame.event.get():
+                        if event.type == pygame.QUIT: # If user clicked close
+                            sys.exit() 
                         if event.type==pygame.KEYDOWN:
                             key=event.__dict__['unicode']
-                            if key=='\r':
+                            if key=='\x1b':
                                 begin()
                                 pygame.display.flip()
                                 sth=True
@@ -267,9 +405,11 @@ while not done:
                     clock.tick(3)
                     eraseEvents()
                     for event in pygame.event.get():
+                        if event.type == pygame.QUIT: # If user clicked close
+                            sys.exit() 
                         if event.type==pygame.KEYDOWN:
                             key=event.__dict__['unicode']
-                            if key=='\r':
+                            if key=='\x1b':
                                 begin()
                                 pygame.display.flip()
                                 sth=True
@@ -278,19 +418,26 @@ while not done:
                                 
                                 l=main.relative_word(w)
                                 l=main.arrange(w,l)
+                                
                                 instruction_3(w,l,bag)
                                 
                             elif key =="\x08":
                                 w=w[:-1]
                                 l=main.relative_word(w)
                                 l=main.arrange(w,l)
+
                                 instruction_3(w,l,bag)
+                                
+
                             elif key ==" ":
                                 if key in bag:
                                     pass
                                 else:
                                     bag.add(l[0])
+
                                     instruction_3(w,l,bag)
+
+                                    
 
                             
             
@@ -298,82 +445,6 @@ while not done:
 
     pygame.display.flip()
 
-i=0
-bag=list(bag)
-if bag:
-    word=random.choice(bag)
-else:
-    word=random.choice(text)
-print(word)
-l=draw(word)
-d=word_to_dic(word)
-print(d)
-already_set=set()
-memory=[]
-part=0
-done=False
-while not done:
-    
-    # This limits the while loop to a max of 10 times per second.
-    # Leave this out and we will use all CPU we can.
-    clock.tick(3)
-    eraseEvents()
-    
-    for event in pygame.event.get(): # User did something
-
-        print(event)
-        
-        if event.type == pygame.QUIT: # If user clicked close
-            done=True # Flag that we are done so we exit this loop
-        if event.type==pygame.KEYDOWN:
-            print(event.__dict__['unicode'])
-            key=event.__dict__['unicode']
-            if key=='\r':
-                begin()
-            if key not in alphabet:
-                continue
-            if key not in already_set and key in d:
-                fill_all(key,d,l)
-                already_set.add(key)
-            elif    key not in already_set and not key in d:
-                part+=1
-                person((0,0),part)
-            else:
-                pass
-            pygame.display.update() 
-
-        if event.type==pygame.VIDEORESIZE:
-            
-            l=draw(word)
-            for i in already_set:
-                if i in d:
-                    fill_all(i,d,l)
-            person((0,0),part)
-
-    if part>6:
-        if game_status(already_set,d):
-            face(1)
-            print("win")
-            done=True
-        else:
-            print("lost")
-            done=True
-    else:
-        if game_status(already_set,d):
-            face(1)
-            print("win")
-            done=True
-
-
-        
-    # Clear the screen and set the screen background
-    # Draws the surface object to the screen.
-
-    
-    
-    
-    
-    pygame.display.flip()
  
 # pygame.quit()
 
