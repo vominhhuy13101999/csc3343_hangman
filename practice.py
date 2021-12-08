@@ -253,7 +253,7 @@ def instruction_3(word="",l=[],bag=set()):
     for i in range(len(l)):
         
         label = myfont.render(l[i], 1, BLACK)
-        screen.blit(label, (x, y+40*(i+1)))
+        screen.blit(label, (x, y+40*(i)))
 
     pygame.draw.rect(screen,GREEN,pygame.Rect(1066, 390, 300, 340))
     x,y=1066, 390
