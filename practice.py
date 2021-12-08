@@ -141,12 +141,12 @@ def game_status(s,dic):
     return 1
 def begin():
     screen.fill(WHITE)
-    pygame.draw.rect(screen,PINK,pygame.Rect(700, 300, 400, 600))
+    pygame.draw.rect(screen,PINK,pygame.Rect(500, 300, 400, 600))
     instruction_1()
     pygame.display.flip()
     pygame.display.update() 
 def end_screen(status):
-    pygame.draw.rect(screen,BLUE,pygame.Rect(700, 300, 600, 300))
+    pygame.draw.rect(screen,BLUE,pygame.Rect(500, 300, 600, 300))
     
     if status:
         s= "You win! "  
@@ -193,24 +193,24 @@ def end(status):
 def instruction_1():
     s_0="H A N G M A N"
     label = pygame.font.SysFont("Times New Roman", 100).render(s_0, 1, GREEN)
-    screen.blit(label, (550, 100))
+    screen.blit(label, (350, 100))
 
     s= "Begin"  
     s1="Instruction"
     s2="Search"
     label = myfont.render(s, 1, BLUE)
-    pygame.draw.rect(screen,GREEN,pygame.Rect(780, 400, 180, 50))
+    pygame.draw.rect(screen,GREEN,pygame.Rect(580, 400, 180, 50))
 
     # put the label object on the screen at point x=100, y=100
-    screen.blit(label, (800, 400))
+    screen.blit(label, (600, 400))
     label = myfont.render(s1, 1, BLUE)
-    pygame.draw.rect(screen,GREEN,pygame.Rect(780, 550, 180, 50))
+    pygame.draw.rect(screen,GREEN,pygame.Rect(580, 550, 180, 50))
 
-    screen.blit(label, (800, 550))
+    screen.blit(label, (600, 550))
     label = myfont.render(s2, 1, BLUE)
-    pygame.draw.rect(screen,GREEN,pygame.Rect(780, 700, 180, 50))
+    pygame.draw.rect(screen,GREEN,pygame.Rect(580, 700, 180, 50))
 
-    screen.blit(label, (800, 700))
+    screen.blit(label, (600, 700))
     pygame.display.flip()
     pygame.display.update()
 def instruction_2():
@@ -221,52 +221,53 @@ def instruction_2():
 
     s4="hit  begin  when  you  ready"
     label = myfont.render(s, 1, BLUE)
-    pygame.draw.rect(screen,GREEN,pygame.Rect(460, 500, 1100, 250))
+    pygame.draw.rect(screen,GREEN,pygame.Rect(260, 500, 1100, 250))
 
     # put the label object on the screen at point x=100, y=100
-    screen.blit(label, (500, 520))
+    screen.blit(label, (300, 520))
     label = myfont.render(s1, 1, BLUE)
 
-    screen.blit(label, (500, 560))
+    screen.blit(label, (300, 560))
     label = myfont.render(s2, 1, BLUE)
 
-    screen.blit(label, (500, 600))
+    screen.blit(label, (300, 600))
     label = myfont.render(s3, 1, BLUE)
 
-    screen.blit(label, (500, 640))
+    screen.blit(label, (300, 640))
     label = myfont.render(s4, 1, BLUE)
 
-    screen.blit(label, (500, 680))
+    screen.blit(label, (300, 680))
     pygame.display.flip()
     pygame.display.update()
 def instruction_3(word="",l=[],bag=set()):
     begin()
-    pygame.draw.rect(screen,GREEN,pygame.Rect(234, 390, 300, 40))
+    pygame.draw.rect(screen,GREEN,pygame.Rect(34, 390, 300, 40))
     
 
     label = myfont.render(word, 1, BLUE)
-    screen.blit(label, (234, 390))
-    pygame.draw.rect(screen,RED,pygame.Rect(234, 430, 300, 300))
+    screen.blit(label, (34, 390))
+    pygame.draw.rect(screen,RED,pygame.Rect(34, 430, 300, 300))
     
-    x,y=234, 430
+    x,y=34, 430
     # put the label object on the screen at point x=100, y=100
     for i in range(len(l)):
         
         label = myfont.render(l[i], 1, BLACK)
         screen.blit(label, (x, y+40*(i+1)))
 
-    pygame.draw.rect(screen,GREEN,pygame.Rect(1266, 390, 300, 340))
-    x,y=1266, 390
+    pygame.draw.rect(screen,GREEN,pygame.Rect(1066, 390, 300, 340))
+    x,y=1066, 390
     i=0
     for j in bag:
-        i+=1
+        
         label = myfont.render(j, 1, BLACK)
         screen.blit(label, (x, y+40*(i)))
+        i+=1
     pygame.display.flip()
     pygame.display.update()
 def search_screen():
-    pygame.draw.rect(screen,BLUE,pygame.Rect(600, 390, 600, 340))
-    x,y=600, 390
+    pygame.draw.rect(screen,BLUE,pygame.Rect(400, 390, 600, 340))
+    x,y=420, 410
     l=["PARALLEL SEARCH (PRESS 1)","BINARY SEARCH (PRESS 2)","AVL SEARCH (PRESS 3)","BF SEARCH (PRESS 4)",]
     for i in range(len(l)):
         
@@ -374,7 +375,7 @@ while not done:
 
         elif event.type==pygame.MOUSEBUTTONDOWN:
             pos=event.__dict__['pos']
-            if pos[0]>780 and pos[1]>400 and pos[0]<780+180 and pos[1]<400+50:
+            if pos[0]>580 and pos[1]>400 and pos[0]<580+180 and pos[1]<400+50:
                 print("one work")
                 # done=True
                 i=1
@@ -383,7 +384,7 @@ while not done:
                 begin()
                 continue
         
-            if pos[0]>780 and pos[1]>550 and pos[0]<780+180 and pos[1]<550+50:
+            if pos[0]>580 and pos[1]>550 and pos[0]<580+180 and pos[1]<550+50:
                 instruction_2()
                 print("2 work")
 
@@ -402,7 +403,7 @@ while not done:
                                 pygame.display.flip()
                                 sth=True
         
-            if pos[0]>780 and pos[1]>700 and pos[0]<780+180 and pos[1]<700+50:
+            if pos[0]>580 and pos[1]>700 and pos[0]<580+180 and pos[1]<700+50:
                 
                 print("3 work")
                 search_screen()
