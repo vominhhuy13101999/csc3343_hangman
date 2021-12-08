@@ -146,7 +146,7 @@ def begin():
     pygame.display.flip()
     pygame.display.update() 
 def end_screen(status):
-    pygame.draw.rect(screen,BLUE,pygame.Rect(500, 300, 600, 300))
+    pygame.draw.rect(screen,BLUE,pygame.Rect(700, 300, 600, 300))
     
     if status:
         s= "You win! "  
