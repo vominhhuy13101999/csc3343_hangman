@@ -61,9 +61,9 @@ def relative_search(word,method):
         return arrange(word,relative_word(word,7))
     elif method==2:
 
-        a=search.bst(w)
-        if search.get_value(a)==w:
-            l=[w]
+        a=search.bst(word)
+        if search.get_value(a)==word:
+            l=[word]
             
             l.append(search.get_value(a-2))
             l.append(search.get_value(a-1))

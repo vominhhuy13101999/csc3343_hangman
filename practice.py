@@ -264,6 +264,16 @@ def instruction_3(word="",l=[],bag=set()):
         screen.blit(label, (x, y+40*(i)))
     pygame.display.flip()
     pygame.display.update()
+def search_screen():
+    pygame.draw.rect(screen,BLUE,pygame.Rect(600, 390, 600, 340))
+    x,y=600, 390
+    l=["PARALLEL SEARCH (PRESS 1)","BINARY SEARCH (PRESS 2)","AVL SEARCH (PRESS 3)","BF SEARCH (PRESS 4)",]
+    for i in range(len(l)):
+        
+        label = myfont.render(l[i], 1, PINK)
+        screen.blit(label, (x, y+80*(i)))
+    pygame.display.flip()
+    pygame.display.update()
 def game(bag):
     i=0
     bag=list(bag)
@@ -393,15 +403,42 @@ while not done:
                                 sth=True
         
             if pos[0]>780 and pos[1]>700 and pos[0]<780+180 and pos[1]<700+50:
-                instruction_3()
+                
                 print("3 work")
-
+                search_screen()
                 # pygame.display.flip()
                 sth=False
+                num=0
+                while not sth:
+                    clock.tick(3)
+                    eraseEvents()
+                    for event in pygame.event.get():
+                        if event.type == pygame.QUIT: # If user clicked close
+                            sys.exit() 
+                        
+                        if event.type==pygame.KEYDOWN:
+                            key=event.__dict__['unicode']
+                            if key=='\x1b':
+                                begin()
+                                pygame.display.flip()
+                                sth=True
+                            try:
+                                key=int(key)
+                            except:
+                                continue
+                            if key in {1,2,3,4}:
+                                num=key
+                                sth=True
+                if num ==0:
+                    continue
+                print(num)
                 w=""
                 l=[]
                 bag=set()
+                instruction_3()
+                sth=False
                 while not sth:
+                    # print("inhere")
                     clock.tick(3)
                     eraseEvents()
                     for event in pygame.event.get():
@@ -416,14 +453,14 @@ while not done:
                             elif key in alphabet:
                                 w+=key
                                 
-                                l=main.relative_word(w)
+                                l=main.relative_search(w,num)
                                 l=main.arrange(w,l)
                                 
                                 instruction_3(w,l,bag)
                                 
                             elif key =="\x08":
                                 w=w[:-1]
-                                l=main.relative_word(w)
+                                l=main.relative_search(w,num)
                                 l=main.arrange(w,l)
 
                                 instruction_3(w,l,bag)
