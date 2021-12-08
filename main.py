@@ -1,4 +1,4 @@
-# import search
+import search
 import pandas as pd
 import numpy as np
 import numpy.linalg as la
@@ -56,37 +56,42 @@ def arrange(word,short):
       short.insert(0,a)
       return short
   return short
+def relative_search(word,method):
+    if method==1:
+        return arrange(word,relative_word(word,7))
+    elif method==2:
 
+        a=search.bst(w)
+        if search.get_value(a)==w:
+            l=[w]
+            
+            l.append(search.get_value(a-2))
+            l.append(search.get_value(a-1))
+            l.append(search.get_value(a+1))
+            l.append(search.get_value(a+2))
+        else:
+            l=[search.get_value(a-2+i) for i in range(7)]
+        return l
+    elif method==3:
+        bigl=angle_matrix(word).T.tolist()[0]
+        l=search.avl(bigl)
+        return arrange(word,[txt[i][0] for i in l])
+    elif method==4:
+        a=search.bf(word)
+        if a>0:
+        
+            return [search.get_value(a),search.get_value(a-1),search.get_value(a-2),search.get_value(a+1),search.get_value(a+2)]
+        else: 
+            return []
+    
 """
 if __name__ == "__main__":
 
-    w="mornig"
-    a=relative_word(w)
-    print(arrange(w,a))
-    bigl=angle_matrix(w).T.tolist()[0]
-    print(search.bf(w))
-    print(search.bst(w))
-    print(search.get_value(search.cs(w)))
-
-
-    a=search.bst(w)
-    if search.get_value(a)==w:
-        l=[w]
-        
-        l.append(search.get_value(a-2))
-        l.append(search.get_value(a-1))
-        l.append(search.get_value(a+1))
-        l.append(search.get_value(a+2))
-    else:
-        l=[search.get_value(a-2+i) for i in range(5)]
-    print(l)
-
-    
-
-    l=search.avl(bigl)
-    print(l)
-
-    print(arrange(w,[txt[i][0] for i in l]))
+    w="morning"
+    print(relative_search(w,1))
+    print(relative_search(w,2))
+    print(relative_search(w,3))
+    print(relative_search(w,4))
 
 """
 

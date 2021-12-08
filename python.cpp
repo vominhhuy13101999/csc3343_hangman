@@ -188,7 +188,7 @@ static PyObject * search_bf(PyObject *self, PyObject *args)
     index = bf_search<string>(arr,size,a_); //perform code here example perform 
     // cout<<command<<endl;
     if (index < 0) {
-        PyErr_SetString(SearchError, "Search failed");
+        // PyErr_SetString(SearchError, "Search failed");
         return PyLong_FromLong(index);
     }
     return PyLong_FromLong(index); // how function return value in python
@@ -243,16 +243,9 @@ static PyObject * avltree(PyObject *self, PyObject *args)
         T->head= T->insert(T->head,p );
         ++index;
     }
-    // T->preorder(T->head);
 
-    // index = cs_search<string>(arr,size,a_); //perform code here example perform 
-    // // cout<<command<<endl;
-    // if (index < 0) {
-    //     PyErr_SetString(SearchError, "Search failed");
-    //     return PyLong_FromLong(index);
-    // }
+
     vector<int> v1=T->extract_5_min(T->get_5_min(T->head));
-
     return  vectorToList_Int(v1); // how function return value in python
 };
 
@@ -298,7 +291,6 @@ PyMODINIT_FUNC
 PyInit_search(void)
 {
     PyObject *m;
-
     m = PyModule_Create(&searchmodule);
     if (m == NULL)
         return NULL;

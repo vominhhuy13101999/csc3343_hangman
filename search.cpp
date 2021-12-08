@@ -205,13 +205,16 @@ Node* avlTree::get_min(Node* root){
 }
 
 Node* avlTree::get_5_min(Node* root){
-    if (root->height<=2)
+    if (root->height==2 )
         return root;
+    else if (root->height==3 && root->left->height==1)
+        return this->left_rotate(root)->left;
     else
         return this->get_5_min(root->left);
 }
 vector<int> avlTree::extract_5_min(Node* root){
     vector<int> a;
+
 
     if (!root->left->left){
         //left node
